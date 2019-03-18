@@ -1,0 +1,80 @@
+#include "pch.h"
+#include <iostream>
+#include "numbers.dat"
+using namespace std;
+
+int bifind(int m)
+{
+	int min = 0, max = Size - 1, mid;
+	while (max >= min)
+	{
+		mid = (max + min) / 2;
+		if (m > Data[max] || m < Data[min])
+			break;
+		else if (m == Data[mid])
+		{
+			return mid;
+		}
+		else if (m > Data[mid])
+			min = mid + 1;
+		else
+			max = mid - 1;
+	}
+	return -1;
+}
+
+int prime(int n)
+{
+	for (int i = 2; i < n / 2 + 1; i++)
+	{
+		if (n % i == 0)
+			return 1;
+	}
+	return 0;
+
+}
+
+int primefind(int a, int b)
+{
+	int ia = bifind(a);  //индекс а в массиве
+	int ib = bifind(b);  //индекс b в массиве
+	if (ia == -1 || ib == -1)
+		return 0;
+	for (int i = ib; i < Size - 1; i++)
+	{
+		if (Data[ib] == Data[ib + 1])
+			ib++;
+		else
+			break;
+	}
+	int c = 0;
+	for (int i = ia; i < ib + 1; i++)
+	{
+		if (prime(Data[i]) == 0)
+			c++;
+	}
+	return c;
+
+}
+
+int main(int argc, char* argv[])
+{
+	if (argc < 3) return -1;
+	if ((argc + 1) % 2) return -1;
+	int n = (argc - 1) / 2;
+	for (int i = 0; i < n; ++i)
+	{
+		int left = atoi(argv[2 * i + 1]);
+		int right = atoi(argv[2 * (i + 1)]);
+		if (left > right)
+		{
+			cout << 0;
+			return 0;
+		}
+		else
+		{
+			cout << primefind(left, right) << endl;
+		}
+	}
+	return 0;
+}
