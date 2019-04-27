@@ -1,3 +1,6 @@
+#include<algorithm>
+#include<memory>
+#include<iostream>
 class BigInt
 {
 private:
@@ -57,8 +60,6 @@ public:
 	~BigInt()
 	{
 		delete[] number;
-		size = 0;
-		sign = true;
 	}
 
 	BigInt& operator=(const BigInt& other)
